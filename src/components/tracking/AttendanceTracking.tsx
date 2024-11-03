@@ -46,8 +46,8 @@ const formSchema = z.object({
   grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8"], {
     required_error: "Please select a grade.",
   }),
-  session: z.string().min(1, {
-    message: 'Please select a session.',
+  session: z.enum(["Morning", "Afternoon"], {
+    required_error: "Please select a session.",
   }),
 });
 
@@ -68,7 +68,7 @@ export default function AttendanceTracking() {
     defaultValues: {
       date: '',
       grade: 'K',
-      session: '',
+      session: 'Morning',
     },
   });
 
@@ -158,6 +158,30 @@ export default function AttendanceTracking() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="session"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Session</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select session" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {["Morning", "Afternoon"].map((session) => (
+                            <SelectItem key={session} value={session}>
+                              {session}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className="space-y-4">
@@ -203,9 +227,8 @@ export default function AttendanceTracking() {
             size="icon"
             className="ml-auto flex items-center justify-center p-2"
             onClick={downloadAttendance}
-            style={{ padding: '8px' }}
           >
-            <Download className="h-6 w-6" /> {/* Single Download icon */}
+            <Download className="h-6 w-6" />
           </Button>
         </CardHeader>
         <CardContent>
