@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -89,13 +89,13 @@ export default function AttendanceTracking() {
     const headers = ['Date', 'Grade', 'Session', 'Volunteers'];
     const csvContent = [
       headers.join(','),
-      ...attendanceEntries.map(entry => 
+      ...attendanceEntries.map(entry =>
         [
           entry.date,
           `Grade ${entry.grade}`,
           entry.session,
           `"${entry.volunteers.join(', ')}"`,
-        ].join(','),
+        ].join(',')
       ),
     ].join('\n');
 
@@ -198,9 +198,15 @@ export default function AttendanceTracking() {
             <CardTitle>Attendance History</CardTitle>
             <CardDescription>View recorded attendance</CardDescription>
           </div>
-          <Button variant="outline" size="icon" onClick={downloadAttendance} className="ml-auto">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={downloadAttendance}
+            className="ml-auto flex items-center"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
             <Download className="h-4 w-4" />
-            <img src="img/images.jpg" alt="Download" className="h-4 w-4" />
+            <img src="/img/images.jpg" alt="Download" className="h-4 w-4 ml-2" />
           </Button>
         </CardHeader>
         <CardContent>
