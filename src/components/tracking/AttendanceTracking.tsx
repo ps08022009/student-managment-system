@@ -207,7 +207,7 @@ export default function AttendanceTracking() {
           >
             <Download className="h-4 w-4" />
             <img
-              src="img/images-removebg-preview.jpg" 
+              src="img/images-removebg-preview.png" 
               alt="Download"
               className="h-4 w-auto ml-2" 
               style={{ maxHeight: '60px', maxWidth: '60px' }} // Prevent compression
