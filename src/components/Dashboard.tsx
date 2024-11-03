@@ -18,7 +18,7 @@ export default function Dashboard() {
             Here's an overview of your volunteer management system
           </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 pl-7"> 
           <ModeToggle />
         </div>
       </div>
