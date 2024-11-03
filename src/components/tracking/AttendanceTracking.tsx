@@ -217,7 +217,7 @@ export default function AttendanceTracking() {
             onClick={downloadAttendance}
             className="ml-auto"
           >
-            <Download className="h-4 w-4" />
+            <Download className="h-4 w-4" /> Downlad CSV
           </Button>
         </CardHeader>
         <CardContent>
