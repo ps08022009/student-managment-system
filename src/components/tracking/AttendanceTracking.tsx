@@ -60,9 +60,7 @@ type AttendanceEntry = {
 
 export default function AttendanceTracking() {
   const { volunteers } = useVolunteers();
-  const [attendanceEntries, setAttendanceEntries] = useState<AttendanceEntry[]>(
-    []
-  );
+  const [attendanceEntries, setAttendanceEntries] = useState<AttendanceEntry[]>([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -97,7 +95,7 @@ export default function AttendanceTracking() {
           `Grade ${entry.grade}`,
           entry.session,
           `"${entry.volunteers.join(', ')}"`,
-        ].join(',')
+        ].join(','),
       ),
     ].join('\n');
 
@@ -142,10 +140,7 @@ export default function AttendanceTracking() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Grade</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select grade" />
@@ -171,10 +166,7 @@ export default function AttendanceTracking() {
                   {volunteers
                     .filter(v => v.grade === form.watch('grade'))
                     .map((volunteer) => (
-                      <div
-                        key={volunteer.id}
-                        className="flex items-center space-x-2"
-                      >
+                      <div key={volunteer.id} className="flex items-center space-x-2">
                         <Checkbox
                           id={volunteer.id}
                           checked={selectedVolunteers.includes(volunteer.fullName)}
@@ -182,16 +174,11 @@ export default function AttendanceTracking() {
                             setSelectedVolunteers(
                               checked
                                 ? [...selectedVolunteers, volunteer.fullName]
-                                : selectedVolunteers.filter(
-                                    (name) => name !== volunteer.fullName
-                                  )
+                                : selectedVolunteers.filter(name => name !== volunteer.fullName)
                             );
                           }}
                         />
-                        <label
-                          htmlFor={volunteer.id}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
+                        <label htmlFor={volunteer.id} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                           {volunteer.fullName} ({volunteer.role})
                         </label>
                       </div>
@@ -211,13 +198,9 @@ export default function AttendanceTracking() {
             <CardTitle>Attendance History</CardTitle>
             <CardDescription>View recorded attendance</CardDescription>
           </div>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={downloadAttendance}
-            className="ml-auto"
-          >
-            <Download className="h-4 w-4" /> Downlad CSV
+          <Button variant="outline" size="icon" onClick={downloadAttendance} className="ml-auto">
+            <Download className="h-4 w-4" />
+            <img src="img/download-removebg-preview.png" alt="Download" className="h-4 w-4" />
           </Button>
         </CardHeader>
         <CardContent>
