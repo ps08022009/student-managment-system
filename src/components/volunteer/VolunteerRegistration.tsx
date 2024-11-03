@@ -97,6 +97,23 @@ export default function VolunteerRegistration() {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
+                  
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="adress"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Adress</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="123 Main Street"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
               <FormField
@@ -147,7 +164,7 @@ export default function VolunteerRegistration() {
                       </SelectContent>
                     </Select>
                     <FormMessage />
-                  </FormItem>
+                  </FormItem>                  
                 )}
               />
             </div>
