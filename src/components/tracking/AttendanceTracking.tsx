@@ -200,7 +200,7 @@ export default function AttendanceTracking() {
           </div>
           <Button variant="outline" size="icon" onClick={downloadAttendance} className="ml-auto">
             <Download className="h-4 w-4" />
-            <img src="img/download-removebg-preview.png" alt="Download" className="h-4 w-4" />
+            <img src="img/images.jpg" alt="Download" className="h-4 w-4" />
           </Button>
         </CardHeader>
         <CardContent>
