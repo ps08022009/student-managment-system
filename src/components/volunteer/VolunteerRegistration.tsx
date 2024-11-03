@@ -19,27 +19,48 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useVolunteers, volunteerSchema } from '@/contexts/VolunteerContext';
+import { useVolunteers } from '@/contexts/VolunteerContext';
+import * as z from 'zod';
 
-const formSchema = volunteerSchema.omit({ id: true });
-
-const GRADES = ["K", "1", "2", "3", "4", "5", "6", "7", "8"] as const;
+const formSchema = z.object({
+  fullName: z.string().min(1, 'Full Name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(1, 'Phone number is required'),
+  address: z.string().min(1, 'Address is required'),
+  emergencyContactName: z.string().min(1, 'Emergency contact name is required'),
+  emergencyPhone: z.string().min(1, 'Emergency phone number is required'),
+  role: z.enum(['teacher', 'ta']),
+  grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8"]),
+  dateOfBirth: z.string().min(1, 'Date of Birth is required'),
+  preferredTeams: z.string().optional(),
+  availability: z.string().optional(),
+  skills: z.string().optional(),
+  additionalComments: z.string().optional(),
+});
 
 export default function VolunteerRegistration() {
   const { addVolunteer } = useVolunteers();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: '',
       email: '',
       phone: '',
+      address: '',
+      emergencyContactName: '',
+      emergencyPhone: '',
       role: 'teacher',
       grade: 'K',
+      dateOfBirth: '',
+      preferredTeams: '',
+      availability: '',
+      skills: '',
+      additionalComments: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values) {
     addVolunteer(values);
     toast.success('Volunteer registered successfully!', {
       description: `${values.fullName} has been added as a ${values.role} for grade ${values.grade}.`,
@@ -76,11 +97,7 @@ export default function VolunteerRegistration() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="john@example.com"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="john@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,20 +114,42 @@ export default function VolunteerRegistration() {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                  
                 )}
               />
               <FormField
                 control={form.control}
-                name="adress"
+                name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Adress</FormLabel>
+                    <FormLabel>Address</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="123 Main Street"
-                        {...field}
-                      />
+                      <Input placeholder="123 Main Street" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergencyContactName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Emergency Contact Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Emergency Contact" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergencyPhone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Emergency Phone Number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="(555)-555-5555" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -122,10 +161,7 @@ export default function VolunteerRegistration() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Role</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select role" />
@@ -146,17 +182,14 @@ export default function VolunteerRegistration() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Grade</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select grade" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {GRADES.map((grade) => (
+                        {["K", "1", "2", "3", "4", "5", "6", "7", "8"].map((grade) => (
                           <SelectItem key={grade} value={grade}>
                             Grade {grade}
                           </SelectItem>
@@ -164,7 +197,72 @@ export default function VolunteerRegistration() {
                       </SelectContent>
                     </Select>
                     <FormMessage />
-                  </FormItem>                  
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dateOfBirth"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date of Birth</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} required />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="preferredTeams"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Preferred Teams</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Team 1, Team 2" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="availability"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Availability</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Days and times available" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="skills"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Skills</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Skills you bring" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="additionalComments"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Additional Comments</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Any additional comments" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
             </div>
