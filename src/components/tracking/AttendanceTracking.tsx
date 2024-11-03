@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -89,13 +89,13 @@ export default function AttendanceTracking() {
     const headers = ['Date', 'Grade', 'Session', 'Volunteers'];
     const csvContent = [
       headers.join(','),
-      ...attendanceEntries.map(entry =>
+      ...attendanceEntries.map(entry => 
         [
           entry.date,
           `Grade ${entry.grade}`,
           entry.session,
           `"${entry.volunteers.join(', ')}"`,
-        ].join(',')
+        ].join(','),
       ),
     ].join('\n');
 
@@ -182,7 +182,7 @@ export default function AttendanceTracking() {
                           {volunteer.fullName} ({volunteer.role})
                         </label>
                       </div>
-                    ))}
+                    ))} 
                 </div>
               </div>
 
@@ -202,11 +202,16 @@ export default function AttendanceTracking() {
             variant="outline"
             size="icon"
             onClick={downloadAttendance}
-            className="ml-auto flex items-center"
-            style={{ display: 'flex', alignItems: 'center' }}
+            className="ml-auto flex items-center" // Flex for alignment
+            style={{ padding: '8px' }} // Optional padding
           >
             <Download className="h-4 w-4" />
-            <img src="/img/images.jpg" alt="Download" className="h-4 w-4 ml-2" />
+            <img
+              src="/img/download-icon.png" // Update this path to your image source
+              alt="Download"
+              className="h-4 w-auto ml-2" // Ensure height is set and width adjusts
+              style={{ maxHeight: '24px', maxWidth: '24px' }} // Prevent compression
+            />
           </Button>
         </CardHeader>
         <CardContent>
