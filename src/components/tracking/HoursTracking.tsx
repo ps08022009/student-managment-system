@@ -129,33 +129,6 @@ export default function HoursTracking() {
                 />
                 <FormField
                   control={form.control}
-                  name="grade"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Grade</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select grade" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {["K", "1", "2", "3", "4", "5", "6", "7", "8"].map((grade) => (
-                            <SelectItem key={grade} value={grade}>
-                              Grade {grade}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
                   name="date"
                   render={({ field }) => (
                     <FormItem>
