@@ -32,7 +32,6 @@ const formSchema = z.object({
   role: z.enum(['teacher', 'ta']),
   grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8"]),
   dateOfBirth: z.string().min(1, 'Date of Birth is required'),
-  preferredTeams: z.string().optional(),
   availability: z.string().optional(),
   skills: z.string().optional(),
   additionalComments: z.string().optional(),
@@ -53,7 +52,6 @@ export default function VolunteerRegistration() {
       role: 'teacher',
       grade: 'K',
       dateOfBirth: '',
-      preferredTeams: '',
       availability: '',
       skills: '',
       additionalComments: '',
@@ -208,19 +206,6 @@ export default function VolunteerRegistration() {
                     <FormLabel>Date of Birth</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} required />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="preferredTeams"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Preferred Teams</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Team 1, Team 2" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

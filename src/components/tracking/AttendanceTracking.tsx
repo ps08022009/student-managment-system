@@ -163,30 +163,6 @@ export default function AttendanceTracking() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="session"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Session</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select session" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="morning">Morning</SelectItem>
-                          <SelectItem value="afternoon">Afternoon</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
 
               <div className="space-y-4">
