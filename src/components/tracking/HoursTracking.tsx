@@ -213,7 +213,9 @@ export default function HoursTracking() {
             <CardTitle>Recent Hours</CardTitle>
             <CardDescription>View recently logged hours</CardDescription>
           </div>
-          <Button variant="outline" onClick={downloadHours}>Download CSV</Button>
+          <Button variant="outline" onClick={downloadHours}>
+            <img src="img/images-removebg-preview.png" alt="Download CSV" className="h-5 w-5" />
+          </Button>
         </CardHeader>
         <CardContent>
           <Table>
