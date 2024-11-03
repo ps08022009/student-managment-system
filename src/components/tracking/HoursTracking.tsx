@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -19,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import {
   Card,
@@ -37,90 +37,96 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useVolunteers } from '@/contexts/VolunteerContext';
-import { Download } from 'lucide-react';
 
 const formSchema = z.object({
-  date: z.string().min(1, { message: 'Date is required.' }),
+  volunteerId: z.string().min(1, {
+    message: 'Please select a volunteer.',
+  }),
+  date: z.string().min(1, {
+    message: 'Date is required.',
+  }),
+  hours: z.string().min(1, {
+    message: 'Hours are required.',
+  }),
   grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8"], {
     required_error: "Please select a grade.",
   }),
-  session: z.string().min(1, { message: 'Please select a session.' }),
-  hours: z.string().min(1, { message: 'Hours are required.' }),
+  notes: z.string().optional(),
 });
 
-type AttendanceEntry = {
-  date: string;
-  grade: string;
-  session: string;
-  volunteers: string[];
-  hours: string;
+type HoursEntry = z.infer<typeof formSchema> & {
+  volunteerName: string;
 };
 
-export default function AttendanceTracking() {
+export default function HoursTracking() {
   const { volunteers } = useVolunteers();
-  const [attendanceEntries, setAttendanceEntries] = useState<AttendanceEntry[]>([]);
-  const [selectedVolunteers, setSelectedVolunteers] = useState<string[]>([]);
+  const [hoursEntries, setHoursEntries] = useState<HoursEntry[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      volunteerId: '',
       date: '',
-      grade: 'K',
-      session: '',
       hours: '',
+      grade: 'K',
+      notes: '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const newEntry = {
+    const volunteer = volunteers.find((v) => v.id === values.volunteerId);
+    if (!volunteer) return;
+
+    const entry: HoursEntry = {
       ...values,
-      volunteers: selectedVolunteers,
+      volunteerName: volunteer.fullName,
     };
-    setAttendanceEntries([...attendanceEntries, newEntry]);
-    toast.success('Attendance recorded successfully!', {
-      description: `Recorded attendance for ${selectedVolunteers.length} volunteers.`,
+
+    setHoursEntries([...hoursEntries, entry]);
+    toast.success('Hours logged successfully!', {
+      description: `${entry.hours} hours recorded for ${entry.volunteerName}.`,
     });
     form.reset();
-    setSelectedVolunteers([]);
   }
-
-  const downloadAttendance = () => {
-    const headers = ['Date', 'Grade', 'Session', 'Hours', 'Volunteers'];
-    const csvContent = [
-      headers.join(','),
-      ...attendanceEntries.map(entry => 
-        [
-          entry.date,
-          `Grade ${entry.grade}`,
-          entry.session,
-          entry.hours,
-          `"${entry.volunteers.join(', ')}"`,
-        ].join(',')
-      ),
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `attendance_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Record Attendance</CardTitle>
-          <CardDescription>Track volunteer attendance by session</CardDescription>
+          <CardTitle>Log Hours</CardTitle>
+          <CardDescription>Record volunteer hours and activities</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="volunteerId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Volunteer</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select volunteer" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {volunteers.map((volunteer) => (
+                            <SelectItem key={volunteer.id} value={volunteer.id}>
+                              {volunteer.fullName} ({volunteer.role} - Grade {volunteer.grade})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="date"
@@ -130,33 +136,6 @@ export default function AttendanceTracking() {
                       <FormControl>
                         <Input type="date" {...field} />
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="grade"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Grade</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select grade" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {["K", "1", "2", "3", "4", "5", "6", "7", "8"].map((grade) => (
-                            <SelectItem key={grade} value={grade}>
-                              Grade {grade}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -180,81 +159,52 @@ export default function AttendanceTracking() {
                   )}
                 />
               </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Select Volunteers</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {volunteers
-                    .filter(v => v.grade === form.watch('grade'))
-                    .map((volunteer) => (
-                      <div
-                        key={volunteer.id}
-                        className="flex items-center space-x-2"
-                      >
-                        <Checkbox
-                          id={volunteer.id}
-                          checked={selectedVolunteers.includes(volunteer.fullName)}
-                          onCheckedChange={(checked) => {
-                            setSelectedVolunteers(
-                              checked
-                                ? [...selectedVolunteers, volunteer.fullName]
-                                : selectedVolunteers.filter(
-                                    (name) => name !== volunteer.fullName
-                                  )
-                            );
-                          }}
-                        />
-                        <label
-                          htmlFor={volunteer.id}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {volunteer.fullName} ({volunteer.role})
-                        </label>
-                      </div>
-                    ))}
-                </div>
-              </div>
-
-              <Button type="submit">Record Attendance</Button>
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Add any notes about the work performed"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Log Hours</Button>
             </form>
           </Form>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <div>
-            <CardTitle>Attendance History</CardTitle>
-            <CardDescription>View recorded attendance</CardDescription>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={downloadAttendance}
-            className="ml-auto"
-          >
-            <Download className="h-4 w-4" />
-          </Button>
+        <CardHeader>
+          <CardTitle>Recent Hours</CardTitle>
+          <CardDescription>View recently logged hours</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Date</TableHead>
+                <TableHead>Volunteer</TableHead>
                 <TableHead>Grade</TableHead>
-                <TableHead>Session</TableHead>
                 <TableHead>Hours</TableHead>
-                <TableHead>Volunteers Present</TableHead>
+                <TableHead>Notes</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {attendanceEntries.map((entry, index) => (
+              {hoursEntries.map((entry, index) => (
                 <TableRow key={index}>
                   <TableCell>{entry.date}</TableCell>
+                  <TableCell>{entry.volunteerName}</TableCell>
                   <TableCell>Grade {entry.grade}</TableCell>
-                  <TableCell>{entry.session}</TableCell>
                   <TableCell>{entry.hours}</TableCell>
-                  <TableCell>{entry.volunteers.join(', ')}</TableCell>
+                  <TableCell>{entry.notes}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
