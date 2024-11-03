@@ -89,6 +89,32 @@ export default function HoursTracking() {
     form.reset();
   }
 
+  const downloadHours = () => {
+    const headers = ['Date', 'Volunteer', 'Grade', 'Hours', 'Notes'];
+    const csvContent = [
+      headers.join(','), // Join headers with commas
+      ...hoursEntries.map(entry => 
+        [
+          `"${entry.date}"`, // Wrap date in quotes
+          `"${entry.volunteerName}"`,
+          `Grade ${entry.grade}`,
+          entry.hours,
+          `"${entry.notes || ''}"`, // Wrap notes in quotes and handle optional
+        ].join(',')
+      ),
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `hours_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -182,9 +208,12 @@ export default function HoursTracking() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Recent Hours</CardTitle>
-          <CardDescription>View recently logged hours</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <div>
+            <CardTitle>Recent Hours</CardTitle>
+            <CardDescription>View recently logged hours</CardDescription>
+          </div>
+          <Button variant="outline" onClick={downloadHours}>Download CSV</Button>
         </CardHeader>
         <CardContent>
           <Table>
