@@ -210,7 +210,7 @@ export default function AttendanceTracking() {
               src="img/images.jpg" 
               alt="Download"
               className="h-4 w-auto ml-2" 
-              style={{ maxHeight: '24px', maxWidth: '24px' }} // Prevent compression
+              style={{ maxHeight: '60px', maxWidth: '60px' }} // Prevent compression
             />
           </Button>
         </CardHeader>
