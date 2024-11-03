@@ -201,9 +201,9 @@ export default function AttendanceTracking() {
           <Button
             variant="outline"
             size="icon"
+            className="ml-auto flex items-center justify-center space-x-2 p-2"
             onClick={downloadAttendance}
-            className="ml-auto flex items-center" // Flex for alignment
-            style={{ padding: '8px' }} // Optional padding
+            style={{ padding: '8px' }} 
           >
             <Download className="h-4 w-4" />
             <img
