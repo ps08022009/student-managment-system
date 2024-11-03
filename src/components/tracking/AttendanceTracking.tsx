@@ -201,18 +201,20 @@ export default function AttendanceTracking() {
           <Button
             variant="outline"
             size="icon"
-            className="ml-auto flex items-center justify-center space-x-2 p-2"
+            className="ml-auto flex items-center justify-center p-2" // Center content inside button
             onClick={downloadAttendance}
-            style={{ padding: '8px' }} 
+            style={{ padding: '8px' }}
           >
-            <Download className="h-4 w-4" />
+            <div className="flex items-center justify-center space-x-2">
+            <Download className="h-6 w-6" /> {/* Updated icon size for better balance */}
             <img
-              src="img/images-removebg-preview.png" 
-              alt="Download"
-              className="h-4 w-auto ml-2" 
-              style={{ maxHeight: '60px', maxWidth: '60px' }} // Prevent compression
-            />
-          </Button>
+            src="img/images-removebg-preview.png" 
+            alt="Download"
+            className="h-auto w-6 ml-2" 
+            style={{ maxHeight: '60px', maxWidth: '60px', objectFit: 'contain' }} // Adjusted for image fit
+          />
+          </div>
+        </Button>
         </CardHeader>
         <CardContent>
           <Table>
