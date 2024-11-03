@@ -207,9 +207,9 @@ export default function AttendanceTracking() {
           >
             <Download className="h-4 w-4" />
             <img
-              src="/img/download-icon.png" // Update this path to your image source
+              src="img/images.jpg" 
               alt="Download"
-              className="h-4 w-auto ml-2" // Ensure height is set and width adjusts
+              className="h-4 w-auto ml-2" 
               style={{ maxHeight: '24px', maxWidth: '24px' }} // Prevent compression
             />
           </Button>
