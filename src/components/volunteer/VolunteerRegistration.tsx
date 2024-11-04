@@ -26,7 +26,7 @@ const formSchema = z.object({
   emergencyPhone: z.string().min(1, 'Emergency phone number is required'),
   role: z.enum(['teacher', 'ta']),
   preferredTeams: z.array(z.string()).min(1, 'Please select at least one preferred team'),
-  grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8"]),
+  grade: z.enum(["K", "1", "2", "3", "4", "5", "6", "7", "8", "NA"]), // Added "NA"
   dateOfBirth: z.string().min(1, 'Date of Birth is required'),
   availability: z.string().optional(),
   skills: z.string().optional(),
@@ -46,7 +46,7 @@ export default function VolunteerRegistration() {
       emergencyContactName: '',
       emergencyPhone: '',
       role: 'teacher',
-      preferredTeams: [], // Initialize as an empty array for multi-select
+      preferredTeams: [],
       grade: 'K',
       dateOfBirth: '',
       availability: '',
@@ -67,8 +67,8 @@ export default function VolunteerRegistration() {
   function handleCheckboxChange(field, value) {
     const currentValues = field.value || [];
     const newValues = currentValues.includes(value)
-      ? currentValues.filter(v => v !== value) // Remove if already selected
-      : [...currentValues, value]; // Add new value
+      ? currentValues.filter(v => v !== value)
+      : [...currentValues, value];
     field.onChange(newValues);
   }
 
