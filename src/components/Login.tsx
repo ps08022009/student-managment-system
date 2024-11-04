@@ -18,8 +18,8 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background p-4">
-      <div className="bg-card p-16 rounded-lg shadow-lg w-full max-w-lg"> {/* Increased padding and adjusted width */}
+    <div className="flex items-start justify-start min-h-screen bg-background p-4"> {/* Changed to items-start and justify-start */}
+      <div className="bg-card p-20 rounded-lg shadow-lg w-full max-w-xl"> {/* Increased padding and max width */}
         <h1 className="text-3xl font-semibold mb-6 text-center text-foreground">Login</h1> {/* Increased font size */}
         {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Display error message */}
         <form onSubmit={handleSubmit}>
