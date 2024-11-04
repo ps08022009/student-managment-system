@@ -21,7 +21,6 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   };
 
   const handleGoToHome = () => {
-    // This will call the onLogin function directly for new users
     onLogin();
   };
 
@@ -40,7 +39,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               <span 
                 className={`cursor-pointer ${loginType === 'admin' ? 'font-bold' : ''}`} 
                 onClick={() => handleSliderChange('admin')}
-                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} // Prevent text wrapping
+                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} 
               >
                 Admin Login
               </span>
@@ -49,7 +48,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               <span 
                 className={`cursor-pointer ${loginType === 'existing' ? 'font-bold' : ''}`} 
                 onClick={() => handleSliderChange('existing')}
-                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} // Prevent text wrapping
+                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} 
               >
                 Existing Account
               </span>
@@ -58,7 +57,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               <span 
                 className={`cursor-pointer ${loginType === 'new' ? 'font-bold' : ''}`} 
                 onClick={() => handleSliderChange('new')}
-                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} // Prevent text wrapping
+                style={{ fontSize: '12px', whiteSpace: 'nowrap' }} 
               >
                 Create New Account
               </span>
