@@ -170,7 +170,7 @@ export default function VolunteerRegistration() {
                           : [...currentValues, value]; // Add new value
                         field.onChange(newValues); // Update the field value
                       }}
-                      multiple // Enable multi-select
+                      multiple // This prop should enable multi-selection
                     >
                       <FormControl>
                         <SelectTrigger>
