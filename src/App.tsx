@@ -4,9 +4,11 @@ import { Toaster } from '@/components/ui/sonner';
 import Dashboard from '@/components/Dashboard';
 import { VolunteerProvider } from '@/contexts/VolunteerContext';
 import LoginScreen from '@/components/Login'; 
+import './style.css'; // Importing the Tailwind CSS file
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
   const handleLogin = () => {
     setIsLoggedIn(true); 
   };
