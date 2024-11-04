@@ -19,7 +19,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
   return (
     <div className="flex min-h-screen bg-background p-4"> 
-      <div className="bg-card p-80 rounded-lg shadow-lg w-full max-w-2x1"> 
+      <div className="bg-card p-50 rounded-lg shadow-lg w-full max-w-2x2"> 
         <h1 className="text-3xl font-semibold mb-6 text-foreground">Login</h1> 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>} 
         <form onSubmit={handleSubmit}>
