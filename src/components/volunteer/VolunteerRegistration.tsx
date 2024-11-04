@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox'; // Import Checkbox component
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useVolunteers } from '@/contexts/VolunteerContext';
@@ -109,26 +109,113 @@ export default function VolunteerRegistration() {
               />
               <FormField
                 control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="(555) 555-5555" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="123 Main Street" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergencyContactName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Emergency Contact Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Emergency Contact" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emergencyPhone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Emergency Phone Number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="(555)-555-5555" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="preferredTeams"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Preferred Teams</FormLabel>
                     <div className="flex flex-col space-y-2">
-                      {['Teacher', 'Teaching Assistant', 'Event Volunteer', 'Tech Intern', 'Attendance'].map((team) => (
-                        <Checkbox
-                          key={team}
-                          checked={field.value.includes(team)}
-                          onCheckedChange={() => handleCheckboxChange(field, team)}
-                        >
-                          {team}
-                        </Checkbox>
+                      {['Teacher', 'Teaching Assistant', 'Event Volunteer', 'Tech Intern'].map((team) => (
+                        <div key={team}>
+                          <Checkbox
+                            checked={field.value.includes(team)}
+                            onCheckedChange={() => handleCheckboxChange(field, team)}
+                          />
+                          <span>{team}</span>
+                        </div>
                       ))}
                     </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* Add other fields here */}
+              <FormField
+                control={form.control}
+                name="grade"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Grade</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        className="border p-2 rounded"
+                      >
+                        {["K", "1", "2", "3", "4", "5", "6", "7", "8"].map((grade) => (
+                          <option key={grade} value={grade}>
+                            Grade {grade}
+                          </option>
+                        ))}
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dateOfBirth"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date of Birth</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} required />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <Button type="submit">Register Volunteer</Button>
           </form>
