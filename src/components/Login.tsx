@@ -9,7 +9,6 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Example validation logic based on login type
     if (loginType === 'admin' && email === 'admin@example.com' && password === 'adminpassword') {
       setError('');
       onLogin();
@@ -24,8 +23,8 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     }
   };
 
-  const handleSliderChange = (value: string) => {
-    setLoginType(value as 'admin' | 'existing' | 'new');
+  const handleSliderChange = (value: 'admin' | 'existing' | 'new') => {
+    setLoginType(value);
   };
 
   return (
@@ -35,20 +34,16 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
         <div className="relative mb-4">
           <div className="flex justify-between mb-1">
-            <span>Admin Login</span>
-            <span>Existing Account</span>
-            <span>Create New Account</span>
+            <span className={`cursor-pointer ${loginType === 'admin' ? 'font-bold' : ''}`} onClick={() => handleSliderChange('admin')}>Admin Login</span>
+            <span className={`cursor-pointer ${loginType === 'existing' ? 'font-bold' : ''}`} onClick={() => handleSliderChange('existing')}>Existing Account</span>
+            <span className={`cursor-pointer ${loginType === 'new' ? 'font-bold' : ''}`} onClick={() => handleSliderChange('new')}>Create New Account</span>
           </div>
-          <div className="flex">
-            <div 
-              className={`transition-transform duration-300 ${loginType === 'admin' ? 'translate-x-0' : loginType === 'existing' ? 'translate-x-full' : 'translate-x-2/3'} h-2 bg-primary rounded`}
-              style={{ width: '33.33%' }}
+          <div className="relative w-full bg-gray-300 rounded h-2">
+            <div
+              className={`absolute h-full bg-primary rounded transition-all duration-300 ease-in-out ${
+                loginType === 'admin' ? 'w-1/3 left-0' : loginType === 'existing' ? 'w-1/3 left-1/3' : 'w-1/3 left-2/3'
+              }`}
             />
-          </div>
-          <div className="flex justify-between">
-            <button onClick={() => handleSliderChange('admin')} className="flex-1 p-2">Admin</button>
-            <button onClick={() => handleSliderChange('existing')} className="flex-1 p-2">Existing</button>
-            <button onClick={() => handleSliderChange('new')} className="flex-1 p-2">New</button>
           </div>
         </div>
 
