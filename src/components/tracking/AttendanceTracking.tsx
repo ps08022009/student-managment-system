@@ -147,7 +147,7 @@ export default function AttendanceTracking() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {["K", "1", "2", "3", "4", "5", "6", "7", "8"].map((grade) => (
+                          {["K", "1", "2", "3", "4", "5", "6", "7", "8", "NA"].map((grade) => (
                             <SelectItem key={grade} value={grade}>
                               Grade {grade}
                             </SelectItem>
