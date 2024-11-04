@@ -30,7 +30,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               required 
-              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" {/* Increased padding */}
+              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent"
             />
           </div>
           <div className="mb-4">
@@ -40,12 +40,12 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               required 
-              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" {/* Increased padding */}
+              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" 
             />
           </div>
           <button 
             type="submit" 
-            className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200" {/* Increased padding */}
+            className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200" 
           >
             Login
           </button>
