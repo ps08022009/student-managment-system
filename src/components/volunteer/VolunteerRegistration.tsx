@@ -167,12 +167,12 @@ export default function VolunteerRegistration() {
                     <FormLabel>Preferred Teams</FormLabel>
                     <div className="flex flex-col space-y-2">
                       {['Teacher', 'Teaching Assistant', 'Event Volunteer', 'Tech Intern'].map((team) => (
-                        <div key={team}>
+                        <div key={team} className="flex items-center space-x-2">
                           <Checkbox
                             checked={field.value.includes(team)}
                             onCheckedChange={() => handleCheckboxChange(field, team)}
                           />
-                          <span>{team}</span>
+                          <span className="pl-2">{team}</span>
                         </div>
                       ))}
                     </div>
