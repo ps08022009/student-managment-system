@@ -12,7 +12,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4">
-      <div className="bg-card p-8 rounded-lg shadow-md w-full max-w-sm">
+      <div className="bg-card p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-semibold mb-6 text-center text-foreground">Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
