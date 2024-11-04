@@ -8,7 +8,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation Logic
+    // Example validation logic
     if (email === 'admin@example.com' && password === 'password123') {
       setError(''); // Clear error message
       onLogin(); // Call onLogin if the credentials are correct
@@ -19,7 +19,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4">
-      <div className="bg-card p-10 rounded-lg shadow-lg w-full max-w-3xl"> {/* Increased padding and width */}
+      <div className="bg-card p-12 rounded-lg shadow-lg w-full max-w-md"> {/* Increased padding and adjusted width */}
         <h1 className="text-3xl font-semibold mb-6 text-center text-foreground">Login</h1> {/* Increased font size */}
         {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Display error message */}
         <form onSubmit={handleSubmit}>
@@ -30,7 +30,7 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               required 
-              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent"
+              className="mt-1 block w-full p-4 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" {/* Increased padding */}
             />
           </div>
           <div className="mb-4">
@@ -40,12 +40,12 @@ const LoginScreen: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               required 
-              className="mt-1 block w-full p-3 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" 
+              className="mt-1 block w-full p-4 border border-muted rounded focus:outline-none focus:ring focus:ring-primary focus:border-transparent" {/* Increased padding */}
             />
           </div>
           <button 
             type="submit" 
-            className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200" 
+            className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200" {/* Increased button padding */}
           >
             Login
           </button>
