@@ -1,15 +1,28 @@
+import { useState } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import Dashboard from '@/components/Dashboard';
 import { VolunteerProvider } from '@/contexts/VolunteerContext';
+import LoginScreen from '@/components/Login'; 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const handleLogin = () => {
+    setIsLoggedIn(true); 
+  };
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <VolunteerProvider>
         <div className="min-h-screen bg-background">
-          <Dashboard />
-          <Toaster />
+          {!isLoggedIn ? ( 
+            <LoginScreen onLogin={handleLogin} />
+          ) : (
+            <>
+              <Dashboard />
+              <Toaster />
+            </>
+          )}
         </div>
       </VolunteerProvider>
     </ThemeProvider>
