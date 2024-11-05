@@ -13,12 +13,10 @@ const Login: React.FC<{ onLogin: (loginType: 'admin' | 'existing_user' | 'new_us
     setConfirmationMessage(''); 
 
     if (loginType === 'new') {
-      // Simulate successful sign up
       setConfirmationMessage('We recorded your sign up, check email for further instructions!');
       return; 
     }
 
-    // Existing login logic
     if (loginType === 'admin' && email === 'admin@example.com' && password === 'adminpassword') {
       onLogin('admin');
     } else if (loginType === 'existing' && email === 'user@example.com' && password === 'userpassword') {
@@ -83,7 +81,7 @@ const Login: React.FC<{ onLogin: (loginType: 'admin' | 'existing_user' | 'new_us
 
         <form onSubmit={(e) => e.preventDefault()}>
           {loginType === 'new' ? (
-            <VolunteerRegistration /> // Reference to the VolunteerRegistration component
+            <VolunteerRegistration /> 
           ) : (
             <>
               <div className="mb-4">
