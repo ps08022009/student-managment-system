@@ -9,7 +9,9 @@ import './style.css'; // Importing the Tailwind CSS file
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
-  const handleLogin = () => {
+  const handleLogin = (loginType: 'admin' | 'existing_user' | 'new_user') => {
+    // Log the login type if needed
+    console.log(`User logged in as: ${loginType}`);
     setIsLoggedIn(true); 
   };
 

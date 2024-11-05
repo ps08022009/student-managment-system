@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
+import VolunteerRegistration from './volunteer/VolunteerRegistration'; 
 
-const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+const Login: React.FC<{ onLogin: (loginType: 'admin' | 'existing_user' | 'new_user') => void }> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState(''); 
   const [loginType, setLoginType] = useState<'admin' | 'existing' | 'new'>('existing');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    setError(''); 
+    setConfirmationMessage(''); 
 
+    if (loginType === 'new') {
+      // Simulate successful sign up
+      setConfirmationMessage('We recorded your sign up, check email for further instructions!');
+      return; 
+    }
+
+    // Existing login logic
     if (loginType === 'admin' && email === 'admin@example.com' && password === 'adminpassword') {
-      setError('');
-      onLogin();
+      onLogin('admin');
     } else if (loginType === 'existing' && email === 'user@example.com' && password === 'userpassword') {
-      setError('');
-      onLogin();
+      onLogin('existing_user');
     } else {
       setError('Invalid credentials or details. Please try again.');
     }
-  };
-
-  const handleGoToHome = () => {
-    onLogin();
   };
 
   const handleSliderChange = (value: 'admin' | 'existing' | 'new') => {
@@ -75,18 +79,11 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         </div>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {confirmationMessage && <p className="text-green-500 text-center mb-4">{confirmationMessage}</p>} {/* Confirmation message */}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           {loginType === 'new' ? (
-            <div className="mb-4 text-center">
-              <button 
-                type="button" 
-                onClick={handleGoToHome} 
-                className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200"
-              >
-                Go to Home
-              </button>
-            </div>
+            <VolunteerRegistration /> // Reference to the VolunteerRegistration component
           ) : (
             <>
               <div className="mb-4">
@@ -110,7 +107,8 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
                 />
               </div>
               <button 
-                type="submit" 
+                type="button" // Change to type="button"
+                onClick={handleSubmit} // Call handleSubmit on click
                 className="w-full py-3 bg-primary text-white font-semibold rounded hover:bg-primary-700 transition duration-200"
               >
                 {loginType === 'existing' ? 'Login' : 'Admin Login'}
